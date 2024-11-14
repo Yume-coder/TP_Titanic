@@ -1,0 +1,69 @@
+---
+title: "Analyse"
+output: html_document
+date: "2024-11-14"
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+#Charger les données TitanicSurvival
+```{r}
+library(carData)
+BDD <- TitanicSurvival
+```
+
+```{r}
+summary(BDD)
+library(psych)
+describe(BDD)
+```
+#Statistique descriptive:
+-Survived (Yes/no): Variables catégorielles nominales, Indique si le passager a survécu ou non.
+-Sex : Variables catégorielles nominales, indique le sexe du passager(masculin/féminin).
+-Age : numérique , indique l'age des passagers
+-PassengerClass : variable ordinale indique la classe du passager à bord du Titanic, représentant la catégorie de confort du passager.
+1 : Première classe (les plus privilégiés).
+2 : Deuxième classe.
+3 : Troisième classe (les moins privilégiés).
+#Visualisez la répartition des survivants en fonction du sexe et la classe. 
+
+```{r}
+#Répartition des Survivants en Fonction du Sexe
+library(ggplot2)
+ggplot(BDD, aes(x = factor(survived), fill = factor(sex))) +
+  geom_bar(position = "dodge") +  
+  labs(
+    title = "Répartition des Survivants en Fonction du Sexe",
+    x = "Survécu (No = Non, yes = Oui)",
+    y = "Nombre de Personnes"
+  ) +
+  scale_fill_manual(values = c("deeppink", "skyblue")) +
+  theme_minimal()
+
+#Répartition des Survivants en Fonction de la Classe
+ggplot(BDD, aes(x = factor(survived), fill = factor(passengerClass))) +
+  geom_bar(position = "dodge") + 
+  labs(
+    title = "Répartition des Survivants en Fonction de la Classe",
+    x = "Survécu (NO = Non, yes = Oui)",
+    y = "Nombre de Personnes"
+  ) +
+  scale_fill_brewer(palette = "Dark2") +
+  theme_minimal()
+```
+
+#Représentez l’age en fonction de la variable survived
+```{r}
+ggplot(BDD, aes(x = factor(survived), y = age, fill = factor(survived))) +
+  geom_boxplot() +
+  labs(
+    title = "Distribution de l'Âge en Fonction de la Survie",
+    x = "Survie (no = Non, yes = Oui)",
+    y = "Âge"
+  ) +
+  scale_fill_manual(values = c("yellow", "lightgreen"), name = "Survived") +
+  theme_minimal()
+
+```
+
